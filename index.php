@@ -15,31 +15,39 @@
   </head>
 <body>
 <?php require_once './php_files/process.php'; ?>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th colspan="2">Action</th>
-                </tr>
-            </thead>
-            <?php while ($row = $result->fetch_assoc()){ ?>
-                <tr>
-                    <td><?php echo $row['id'];?></td>
-                    <td><?php echo $row['name'];?></td>
-                    <td><?php echo $row['location'];?></td>
-                    <td>
-                        <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-info">Edit</a>
-                        <a href="./php_files/process.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            <?php } ?>
-        </table>
-    </div>
+    <?php if (isset($_SESSION['message'])):?>
+        <div class="alert alert-<?=$_SESSION['msg_type']?>">
+            <?php 
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+            ?>
+        </div>
+    <?php endif; ?>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo $row['id'];?></td>
+                        <td><?php echo $row['name'];?></td>
+                        <td><?php echo $row['location'];?></td>
+                        <td>
+                            <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-info">Edit</a>
+                            <a href="./php_files/process.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        </div>
     </div>
 
   <div class="container">
